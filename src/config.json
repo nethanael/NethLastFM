@@ -1,0 +1,10 @@
+{
+    "apiAuthURL": "https://www.last.fm/api/auth/",
+    "aplicationName": "Neth LastFM",
+    "apiKey": "bb5f402825443cedea80583282f6622b",
+    "apiSharedSecret": "a840dce92602990f178c7a4343eaa060",
+    "apiUser": "nethanael",
+    "callbackURL": "http://localhost:3000/panel1/",
+    "apiDataURL": "http://ws.audioscrobbler.com/2.0/",
+    "connectionString": "https://www.last.fm/api/auth/?api_key=bb5f402825443cedea80583282f6622b&cb=http://localhost:3000/social/"
+}

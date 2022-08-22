@@ -1,6 +1,8 @@
+import userEvent from "@testing-library/user-event";
+import React from "react";
 import { NavLink } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ userWEBSession: user}) => {
     return ( 
         <div className="row align-items-center mi_row">
             <div className="col mi_col"></div> 
@@ -9,21 +11,31 @@ const NavBar = () => {
                 <div className="container-fluid">
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav">
-                            <NavLink to="/" className="navbar-brand nav-link">
-                                Home
-                            </NavLink>
-                            <NavLink to="/social" className="nav-link">
-                                Social
-                            </NavLink>
-                            <NavLink to="/panel2" className="nav-link">
-                                Panel 2
-                            </NavLink>
-                            <NavLink to="/panel3" className="nav-link">
-                                Panel 3
-                            </NavLink>
-                            <NavLink to="/about" className="nav-link">
-                                About
-                            </NavLink>
+                            {!user.name &&                                                   // We conditionally render elemets of the navbar here
+                                                                                            // based on the userWEBSession obj of the state
+                                <NavLink to="/" className="navbar-brand nav-link">          
+                                    Login
+                                </NavLink>
+                            }
+                            {user.name &&
+                                <React.Fragment>
+                                    <NavLink to="/home" className="nav-link">
+                                        {user.name}
+                                    </NavLink>
+                                    <NavLink to="/social" className="nav-link">
+                                        Social
+                                    </NavLink>
+                                    <NavLink to="/dashboard" className="nav-link">
+                                        Dashboard
+                                    </NavLink>
+                                    <NavLink to="/about" className="nav-link">
+                                        About
+                                    </NavLink>
+                                    <NavLink to="/logout" className="nav-link">
+                                        Log out
+                                    </NavLink>
+                                </React.Fragment>
+                            }
                         </div>
                     </div>
                 </div>

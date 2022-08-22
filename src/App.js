@@ -1,3 +1,5 @@
+//----------------------------------------------------------Imports
+
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
@@ -8,12 +10,11 @@ import config from './config.json'
 import { ToastContainer } from 'react-toastify';
 import Header from "./components/header";
 import NavBar from "./components/navBar";
-//import Home from "./components/home";
-import Home2 from "./components/home2";
-import Social from "./components/social";
-//import Panel1 from "./components/panel1";
-//import Panel12 from "./components/panel12";
+import Login from "./components/login";
+import Home from './components/home';
+import Dashboard from './components/dashboard';
 import About from "./components/about";
+import Logout from "./components/logout";
 import NotFound from "./components/notfound";
 import Footer from "./components/footer";
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,81 +22,121 @@ import http from './services/httpService';
 import md5 from 'md5';
 
 class App extends Component {
-  
-  state = { 
-    myData: {
-        myToken: null,
-        apiKey: config.apiKey,
-        apiSig: '',
-        mySecret: config.apiSharedSecret
+
+  // Object State
+
+  state = {
+    siteCredentials: {
+      apiKey: config[0].apiKey,
+      mySecret: config[0].apiSharedSecret,
+      connectionString: config[0].apiAuthURL + "?api_key=" + config[0].apiKey + "&cb=" + config[0].callbackURL,
+      myToken: null,
+      apiSig: ''
     },
+    userWEBSession: {}, //the key is only require in some very specific methods
+    userInfo: {},
     friends: [],
     lovedTracks: [],
-    userSession: {},
-    userInfo: {}
   };
 
   handleEvent = (name) => {
     console.log("Event Handle Succesful:", name.realname);
   };
 
+  handleCookies = (userWEBSession) => {
+    localStorage.setItem("name", userWEBSession.name);                          // Setting the cookies in the local storage
+    localStorage.setItem("key", userWEBSession.key);
+  };
+
+  handleUserInfo = async (user) => {
+
+    const { apiKey } = this.state.siteCredentials;        //extract API credentials given by Last FM from the state
+
+    let method = "user.getinfo";                          // Defining the API method (LAST FM API DOCS)
+    let format = "json";                                  // Defining the data format to receive
+    const getUserInfo = config[0].apiDataURL + "?method=" + method + "&user="       // Building the user get info string method
+      + user + "&api_key=" + apiKey + "&format=" + format;
+    console.log("Get User info string query", getUserInfo);   // Logging the string   
+
+    let userInfo = this.state.userInfo;                   // Cloning the userInfo object from the state
+    let result = await http.get(getUserInfo);             // HTTP get request with the string (previously build)
+    userInfo = result.data.user;                          // Updating the userWEBSession Object with http get results
+    console.log("User Info http result: ", result.data);  // Logging the result
+    this.setState({ userInfo });                            // updating the state with the new userInfo
+
+  };
+
   handleSession = async (token) => {
 
-    const { apiKey, mySecret } = this.state.myData;
+    //********************************************** Building the API Signature **************************************
 
-    const myString = "api_key" + apiKey + "methodauth.getSessiontoken" + token + mySecret;
-    const apiSig = md5(myString);
+    const { apiKey, mySecret } = this.state.siteCredentials;        //extract credentials given by Last FM
 
-    //console.log("construcción de string:", apiSig);
+    const myString = "api_key" + apiKey + "methodauth.getSessiontoken" + token + mySecret;    // Building the api signature string
+    const apiSig = md5(myString);                                                             // Applying md5 encription to string
 
-    let { myData } = { ...this.state};
-    myData.apiSig = apiSig; 
+    let { siteCredentials } = { ...this.state };                                 // Cloning Site Credentials object from the state
+    siteCredentials.apiSig = apiSig;                                            // Updating site credentials clone with the apiSignature
+    console.log("API Signature:", apiSig);                                      // Logging
 
-    let method = "auth.getSession";
-    let format = "json";
-    const getUserSession = config.apiDataURL + "?method=" + method + "&api_key=" + apiKey + "&api_sig=" 
-                            + apiSig + "&token=" + token + "&format=" + format;
+    //************************************************** Building the Web Session*************************************
 
-    let userSession = this.state.userSession;
-    let result = await http.get(getUserSession);
-    userSession = result.data.session; 
-    console.log(result.data.session);
+    let method = "auth.getSession";                                             // Defining the API method (LAST FM API DOCS)
+    let format = "json";                                                        // Defining the data format to receive
+    const getUserSession = config[0].apiDataURL + "?method=" + method + "&api_key=" + apiKey + "&api_sig="  // Building the WEB session 
+      + apiSig + "&token=" + token + "&format=" + format;                             // string method
 
-    method = "user.getinfo";
-    const user = result.data.session.name;
-    format = "json";
-    const getUserInfo = config.apiDataURL + "?method=" + method + "&user=" + user + "&api_key=" + apiKey + "&format=" + format;
-    console.log(getUserInfo);
-    result = await http.get(getUserInfo);
-    
-    let userInfo = this.state.userInfo;
-    userInfo = result.data.user;
-    console.log(result.data);
-    this.setState({userInfo});
+    let userWEBSession = this.state.userWEBSession;                             //Cloning the userWEBSession object from the state
+    let result = await http.get(getUserSession);                                // HTTP get request with the string (previously build)
+    console.log("Complete Result of WEBSESSION get method: ", result);                                                        // Logging the complete result
+    userWEBSession = result.data.session;                                       // Updating the userWEBSession Object with http get results
+    console.log("WEB Session object: ", result.data.session);                   // Logging
 
-    this.setState( { userSession, myData, userInfo } );
+    this.handleCookies(userWEBSession);                                         // Calling the handleCookies method to set the local storage
+    this.handleUserInfo(result.data.session.name);                              // Calling the handleUserInfo event to get user info
+    this.setState({ userWEBSession, siteCredentials });                       // update the state with userWEBSession and siteCredentials
 
-    };
+  };
 
-  render() { 
+  handleLogout = () => {
+    let userWEBSession = this.state.userWEBSession;
+    userWEBSession = null;
+    this.setState({ userWEBSession })
+
+    localStorage.removeItem("name");                          // Setting the cookies in the local storage
+    localStorage.removeItem("key");
+
+    window.location = '/';
+  };
+
+  render() {
+    const { connectionString } = this.state.siteCredentials;
+    const { siteCredentials, userWEBSession, userInfo } = this.state;
     return (
       <div className="App">
         <div className="container-sm mi_cont">
           <ToastContainer />
           <Header />
           <Router>
-            <NavBar />
+            <NavBar
+              userWEBSession={this.state.userWEBSession}
+            />
             <Routes>
-              <Route path="/" element={<Home2 connectionString={config.connectionString} />}/>
-              <Route path="/social" element={
-                <Social
-                  myData={this.state.myData}
-                  userSession={this.state.userSession} 
-                  userInfo={this.state.userInfo}
+              <Route path="/" element={<Login connectionString={connectionString} />} />
+              <Route path="/home" element={
+                <Home
+                  siteCredentials={siteCredentials}
+                  userWEBSession={userWEBSession}
+                  userInfo={userInfo}
                   handleSession={this.handleSession}
-                  handleEvent={this.handleEvent} 
-              />}/>
-              <Route path="/about" element={<About apiKey={this.state.myData.apiKey} />} />
+                  handleEvent={this.handleEvent}
+                />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/about" element={<About apiKey={this.state.siteCredentials.apiKey} />} />
+              <Route path="/logout" element={
+                <Logout
+                  handleLogout={this.handleLogout}
+                />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>

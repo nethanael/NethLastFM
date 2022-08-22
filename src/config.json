@@ -1,10 +1,25 @@
-{
-    "apiAuthURL": "https://www.last.fm/api/auth/",
-    "aplicationName": "Neth LastFM",
-    "apiKey": "bb5f402825443cedea80583282f6622b",
-    "apiSharedSecret": "a840dce92602990f178c7a4343eaa060",
-    "apiUser": "nethanael",
-    "callbackURL": "http://localhost:3000/panel1/",
-    "apiDataURL": "http://ws.audioscrobbler.com/2.0/",
-    "connectionString": "https://www.last.fm/api/auth/?api_key=bb5f402825443cedea80583282f6622b&cb=http://localhost:3000/social/"
-}
+[
+    {
+        "aplicationName": "Neth LastFM",
+        "apiUser": "nethanael",  
+        "apiKey": "bb5f402825443cedea80583282f6622b",               
+        "apiSharedSecret": "a840dce92602990f178c7a4343eaa060",
+
+        "apiAuthURL": "https://www.last.fm/api/auth/",                                                      
+        "callbackURL": "http://localhost:3000/home/", 
+        "apiDataURL": "http://ws.audioscrobbler.com/2.0/"
+
+    },
+
+    {
+        "aplicationName__DESC": "App Name for last FM ",
+        "apiUser__DESC": "API user who asked for the credentials",                                         
+        "apiKey__DESC": "API key gave by Last FM ",               
+        "apiSharedSecret__DESC": "API Shared Secret gave by Last FM",
+
+        "apiAuthURL__DESC": "Authentication URL",                              
+        "callbackURL__DESC": "Call back URL to call when positive authentication",             
+        "apiDataURL__DESC": "DATA URL, here we append API methods"
+        
+    }
+]

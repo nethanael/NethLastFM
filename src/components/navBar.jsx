@@ -1,18 +1,17 @@
-import userEvent from "@testing-library/user-event";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const NavBar = ({ userWEBSession: user}) => {
+const NavBar = ({ userWEBSession: user }) => {
     return ( 
         <div className="row align-items-center mi_row">
             <div className="col mi_col"></div> 
             <div className="col mi_col">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div className="container-fluid">
-                    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div className="container-fluid">                                           
+                    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">      
                         <div className="navbar-nav">
-                            {!user.name &&                                                   // We conditionally render elemets of the navbar here
-                                                                                            // based on the userWEBSession obj of the state
+                            {!user.name &&                                          
+                                                                                           
                                 <NavLink to="/" className="navbar-brand nav-link">          
                                     Login
                                 </NavLink>
@@ -20,7 +19,7 @@ const NavBar = ({ userWEBSession: user}) => {
                             {user.name &&
                                 <React.Fragment>
                                     <NavLink to="/home" className="nav-link">
-                                        {user.name}
+                                        Home {user.name}
                                     </NavLink>
                                     <NavLink to="/social" className="nav-link">
                                         Social

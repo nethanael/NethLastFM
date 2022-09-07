@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route, Navigate
 } from "react-router-dom";
-import config from './config.json'
+import config from './config.json';
 import { ToastContainer } from 'react-toastify';
 import Header from "./components/header";
 import NavBar from "./components/navBar";
@@ -15,11 +15,11 @@ import Home from './components/home';
 import Dashboard from './components/dashboard';
 import About from "./components/about";
 import Logout from "./components/logout";
-import NotFound from "./components/notfound";
 import Footer from "./components/footer";
 import 'react-toastify/dist/ReactToastify.css';
 import http from './services/httpService';
 import md5 from 'md5';
+import ProtectedRoutes from './components/protectedRoutes';
 
 class App extends Component {
 
@@ -95,7 +95,7 @@ class App extends Component {
     this.handleCookies(userWEBSession);                                         // Calling the handleCookies method to set the local storage
     this.handleUserInfo(result.data.session.name);                              // Calling the handleUserInfo event to get user info
     this.setState({ userWEBSession, siteCredentials });                       // update the state with userWEBSession and siteCredentials
-
+    
   };
 
   handleLogout = () => {
@@ -103,7 +103,7 @@ class App extends Component {
     userWEBSession = null;
     this.setState({ userWEBSession })
 
-    localStorage.removeItem("name");                          // Setting the cookies in the local storage
+    localStorage.removeItem("name");                          // Removing the cookies from the local storage
     localStorage.removeItem("key");
 
     window.location = '/';
@@ -122,22 +122,28 @@ class App extends Component {
               userWEBSession={this.state.userWEBSession}
             />
             <Routes>
-              <Route path="/" element={<Login connectionString={connectionString} />} />
-              <Route path="/home" element={
-                <Home
+              <Route path="/" element={
+                <Login 
+                  connectionString={connectionString}
                   siteCredentials={siteCredentials}
-                  userWEBSession={userWEBSession}
-                  userInfo={userInfo}
-                  handleSession={this.handleSession}
-                  handleEvent={this.handleEvent}
-                />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/about" element={<About apiKey={this.state.siteCredentials.apiKey} />} />
-              <Route path="/logout" element={
-                <Logout
-                  handleLogout={this.handleLogout}
-                />} />
-              <Route path="*" element={<NotFound />} />
+                  handleSession={this.handleSession} 
+                  userWEBSession={this.state.userWEBSession}
+                />} 
+              />
+              <Route element={ <ProtectedRoutes userInfo={this.state.userInfo} /> }>
+                    <Route path="/home" element={
+                        <Home
+                          userWEBSession={userWEBSession}
+                          userInfo={userInfo}
+                          handleEvent={this.handleEvent}
+                        />} 
+                      />
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/about" element={<About apiKey={this.state.siteCredentials.apiKey} />} />
+                      <Route path="/logout" element={
+                      <Logout handleLogout={this.handleLogout}/>} />
+              </Route>
+              <Route path="*" element={<Navigate to ="/" />} />
             </Routes>
           </Router>
           <Footer />

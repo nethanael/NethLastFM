@@ -6,7 +6,7 @@
         "apiSharedSecret": "a840dce92602990f178c7a4343eaa060",
 
         "apiAuthURL": "https://www.last.fm/api/auth/",                                                      
-        "callbackURL": "http://localhost:3000/home/", 
+        "callbackURL": "http://localhost:3000/", 
         "apiDataURL": "http://ws.audioscrobbler.com/2.0/"
 
     },

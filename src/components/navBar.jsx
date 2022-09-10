@@ -22,7 +22,13 @@ const NavBar = ({ userWEBSession: user }) => {
                                         Home {user.name}
                                     </NavLink>
                                     <NavLink to="/social" className="nav-link">
-                                        Social
+                                        Friends
+                                    </NavLink>
+                                    <NavLink to="/tracks" className="nav-link">
+                                        Loved Tracks
+                                    </NavLink>
+                                    <NavLink to="/toptracks" className="nav-link">
+                                        Top Tracks
                                     </NavLink>
                                     <NavLink to="/dashboard" className="nav-link">
                                         Dashboard

@@ -13,6 +13,9 @@ import NavBar from "./components/navBar";
 import Login from "./components/login";
 import Home from './components/home';
 import Dashboard from './components/dashboard';
+import Social from './components/social';
+import TopTracks from './components/toptracks';
+import Tracks from './components/tracks';
 import About from "./components/about";
 import Logout from "./components/logout";
 import Footer from "./components/footer";
@@ -37,6 +40,7 @@ class App extends Component {
     userInfo: {},
     friends: [],
     lovedTracks: [],
+    topTracks: []
   };
 
   handleEvent = (name) => {
@@ -109,6 +113,56 @@ class App extends Component {
     window.location = '/';
   };
 
+  handleFriends = async () => {
+    const { apiKey } = this.state.siteCredentials;        //extract API credentials given by Last FM from the state
+
+    const method = "user.getfriends";
+    const format = "json";
+    const user = this.state.userWEBSession.name;
+    const getFriendsString = config[0].apiDataURL + "?method=" + method + "&user=" + user + "&api_key=" + apiKey + "&format=" + format;
+    //console.log(getFriendsString);
+    const result = await http.get(getFriendsString);
+
+    let friends = this.state.friends;
+    friends = result.data.friends.user;
+    console.log(result.data.friends.user);
+    this.setState({friends});
+};
+
+handleLovedTracks = async () => {
+  const { apiKey } = this.state.siteCredentials;        //extract API credentials given by Last FM from the state
+
+  const method = "user.getlovedtracks";
+  const format = "json";
+  const user = this.state.userWEBSession.name;
+  
+  const getLovedTracksString = config[0].apiDataURL  + "?method=" + method + "&user=" + user + "&api_key=" + apiKey + "&format=" + format;
+  //console.log(getFriendsString);
+  const result = await http.get(getLovedTracksString);
+  
+  let lovedTracks = this.state.lovedTracks;
+  lovedTracks = result.data.lovedtracks.track;
+  //console.log(result.data.lovedtracks.track);
+  this.setState({lovedTracks});
+};
+
+handleTopTracks = async () => {
+  const { apiKey } = this.state.siteCredentials;        //extract API credentials given by Last FM from the state
+
+  const method = "user.gettoptracks";
+  const format = "json";
+  const user = this.state.userWEBSession.name;
+  
+  const getTopTracksString = config[0].apiDataURL  + "?method=" + method + "&user=" + user + "&api_key=" + apiKey + "&format=" + format;
+  
+  const result = await http.get(getTopTracksString);
+  
+  let topTracks = this.state.topTracks;
+  topTracks = result.data.toptracks.track;
+  //console.log(result.data.lovedtracks.track);
+  this.setState({topTracks});
+};
+
   render() {
     const { connectionString } = this.state.siteCredentials;
     const { siteCredentials, userWEBSession, userInfo } = this.state;
@@ -136,6 +190,24 @@ class App extends Component {
                           userWEBSession={userWEBSession}
                           userInfo={userInfo}
                           handleEvent={this.handleEvent}
+                        />} 
+                      />
+                      <Route path="/social" element={
+                        <Social
+                          getFriends={this.handleFriends} 
+                          friends={this.state.friends}
+                        />} 
+                      />
+                      <Route path="/tracks" element={
+                        <Tracks
+                          getTracks={this.handleLovedTracks} 
+                          lovedTracks={this.state.lovedTracks}
+                        />} 
+                      />
+                      <Route path="/toptracks" element={
+                        <TopTracks
+                          getTracks={this.handleTopTracks} 
+                          topTracks={this.state.topTracks}
                         />} 
                       />
                       <Route path="/dashboard" element={<Dashboard />} />

@@ -3,7 +3,7 @@ class Login extends Component {
 
     componentDidMount() {
 
-        // This is where we catch the Auth TOKEN gave by lastFM after the authentication, cause this is our call back URL 
+        // This is where we catch the Auth TOKEN given by lastFM after the authentication, cause this is our call back URL 
         // We will send this token to the main state in order to create a Last.fm web service session
         // also we build the signature for some specific API methods
 

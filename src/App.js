@@ -43,10 +43,6 @@ class App extends Component {
     topTracks: []
   };
 
-  handleEvent = (name) => {
-    console.log("Event Handle Succesful:", name.realname);
-  };
-
   handleCookies = (userWEBSession) => {
     localStorage.setItem("name", userWEBSession.name);                          // Setting the cookies in the local storage
     localStorage.setItem("key", userWEBSession.key);
@@ -127,9 +123,9 @@ class App extends Component {
     friends = result.data.friends.user;
     console.log(result.data.friends.user);
     this.setState({friends});
-};
+  };
 
-handleLovedTracks = async () => {
+  handleLovedTracks = async () => {
   const { apiKey } = this.state.siteCredentials;        //extract API credentials given by Last FM from the state
 
   const method = "user.getlovedtracks";
@@ -144,9 +140,9 @@ handleLovedTracks = async () => {
   lovedTracks = result.data.lovedtracks.track;
   //console.log(result.data.lovedtracks.track);
   this.setState({lovedTracks});
-};
+  };
 
-handleTopTracks = async () => {
+  handleTopTracks = async () => {
   const { apiKey } = this.state.siteCredentials;        //extract API credentials given by Last FM from the state
 
   const method = "user.gettoptracks";
@@ -161,7 +157,7 @@ handleTopTracks = async () => {
   topTracks = result.data.toptracks.track;
   //console.log(result.data.lovedtracks.track);
   this.setState({topTracks});
-};
+  };
 
   render() {
     const { connectionString } = this.state.siteCredentials;
@@ -189,7 +185,6 @@ handleTopTracks = async () => {
                         <Home
                           userWEBSession={userWEBSession}
                           userInfo={userInfo}
-                          handleEvent={this.handleEvent}
                         />} 
                       />
                       <Route path="/social" element={

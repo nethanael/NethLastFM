@@ -37,11 +37,6 @@ class Home extends Component {
                         </tbody>
                     </table>
                 </div>
-                <div className='col mi_col'>
-                    <button className="btn btn-success" onClick={() => this.props.handleEvent({realname})}>
-                        Test Me
-                    </button>
-                </div>
             </div>
             <div className="col mi_col"></div> 
         </div>

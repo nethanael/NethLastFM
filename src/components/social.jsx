@@ -18,13 +18,15 @@ class Social extends Component {
             <div className='col mi_col'>
                 <div className='col mi_col'>
                     <table className="table">
+                        <tbody>
                         {friends.map(friend => 
                             <tr key={friend.registered.unixtime}>
                                 <td><a href={friend.url}>{friend.name}</a></td>
                                 <td><img src={friend.image[1]['#text']}></img></td>
                                 <td>{friend.registered['#text']}</td>    
                             </tr>
-                        )}  
+                        )}
+                        </tbody>  
                     </table>
                 </div>
             </div>

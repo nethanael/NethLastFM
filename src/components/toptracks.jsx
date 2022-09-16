@@ -16,13 +16,15 @@ class TopTracks extends Component {
             <div className='col mi_col'>
                 <div className='col mi_col'>
                     <table className="table">
+                        <tbody>
                         {tracks.map(track => 
                             <tr key={track.artist.mbid}>
                                 <td>{track.artist.name}</td>
                                 <td>{track.name}</td>
                                 <td>Played: {track.playcount}</td>  
                             </tr>
-                        )}  
+                        )}
+                        </tbody>  
                     </table> 
                 </div>
             </div>

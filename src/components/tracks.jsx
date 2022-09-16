@@ -16,13 +16,15 @@ class Tracks extends Component {
             <div className='col mi_col'>
                 <div className='col mi_col'>
                     <table className="table">
+                        <tbody>
                         {tracks.map(track => 
                             <tr key={track.date.uts}>
                                 <td>{track.artist.name}</td>
                                 <td>{track.name}</td>
                                 <td><img src={track.image[1]['#text']}></img></td>  
                             </tr>
-                        )}  
+                        )}
+                        </tbody>  
                     </table> 
                 </div>
             </div>

@@ -19,7 +19,7 @@ class Login extends Component {
             const queryParams = new URLSearchParams(window.location.search);
             const siteCredentials = this.props.siteCredentials;
             siteCredentials.myToken = queryParams.get("token");
-            console.log("Component Did Mount!");
+            //console.log("Component Did Mount!");
     
             handleSession(siteCredentials.myToken);                 // Here we send the token to the handleSession method 
 

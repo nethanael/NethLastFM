@@ -32,7 +32,7 @@ class Social extends Component {
             </div>
             <div className="col mi_col"></div> 
         </div>
-            );
+        );
     }
 }
  

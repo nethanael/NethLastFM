@@ -3,9 +3,9 @@ const Header = () => {
     <div className="row align-items-center mi_row">
         <div className="col mi_col"></div>
         <div className="col mi_col">
-            <h1>Neth - LastFM</h1>
+            <h1>LastFM Personal APP</h1>
             <p className="lead">
-                Stats - API demo
+                Review your profile and get useful reports.
             </p>
         </div>
         <div className="col mi_col"></div>

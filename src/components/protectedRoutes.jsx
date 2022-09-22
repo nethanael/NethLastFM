@@ -7,7 +7,7 @@ import { Navigate, Outlet } from "react-router-dom";
 const handleUseAuth = (userInfo) => {
     //const user = {loggedIn: false};
     const user = userInfo;
-    console.log("mi user check: ", user.name);
+    //console.log("mi user check: ", user.name);
     return user && user.name;
 }
 

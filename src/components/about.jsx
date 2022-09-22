@@ -5,11 +5,13 @@ const About = () => {
         <React.Fragment>
 
             <div className="row align-items-center mi_row">
+            <div className="col mi_col"></div>
                 <div className="col mi_col">
                 <small className="text-muted">
-                    Third party manage app for LAST FM Social Network.
+                    Third party manage app for The Last FM Social Network.
                 </small>
                 </div>
+            <div className="col mi_col"></div>
             </div>
             
             <div className="row align-items-center mi_row"> 
@@ -17,7 +19,7 @@ const About = () => {
                     <h4></h4>
                 </div>
                 <div className="col mi_col">
-                    <h4>Developer: Eng. Pablo Hidalgo Acuña</h4>
+                    <h4>Developer: Pablo Hidalgo A.</h4>
                 </div>
                 <div className="col mi_col">
                     <h4></h4>

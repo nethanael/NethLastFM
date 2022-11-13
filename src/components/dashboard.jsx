@@ -58,39 +58,6 @@ class Dashboard extends Component {
                 </div>
                 <div className='col mi_col'></div>
             </div>
-
-            <div className='row mi_row'>
-                <div className='col mi_col'></div>
-                <div className='col mi_col'>
-                    A
-                </div>
-                <div className='col mi_col'>
-                    B
-                </div>
-                <div className='col mi_col'></div>
-            </div>
-
-            <div className='row mi_row'>
-                <div className='col mi_col'></div>
-                <div className='col mi_col'>
-                    C
-                </div>
-                <div className='col mi_col'>
-                    D
-                </div>
-                <div className='col mi_col'></div>
-            </div>
-
-            <div className='row mi_row'>
-                <div className='col mi_col'></div>
-                <div className='col mi_col'>
-                    E
-                </div>
-                <div className='col mi_col'>
-                    F
-                </div>
-                <div className='col mi_col'></div>
-            </div>
         </React.Fragment>
             );
     }

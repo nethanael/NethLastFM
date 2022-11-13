@@ -10,6 +10,12 @@ class LastYearScrobblesGraphBar extends Component {
         return (
                 <React.Fragment>
                 <h4>Last Year´s Scrobbles per month:</h4>
+                { !data &&
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+                }
+                { data &&
                 <ResponsiveContainer height={300} width={550}>
                     <BarChart 
                         data={data} 
@@ -43,6 +49,7 @@ class LastYearScrobblesGraphBar extends Component {
                     />
                 </BarChart>
             </ResponsiveContainer>
+            }
             </React.Fragment>
             );
     }

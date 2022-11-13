@@ -4,7 +4,7 @@ const Footer = () => {
         <div className="col mi_col"></div>  
         <div className="col mi_col"></div>
         <div className="col-1 mi_col">
-        <p>2022</p>
+        <p>Last FM personal APP</p>
          </div>
          <div className="col mi_col"></div>
          <div className="col mi_col"></div>  

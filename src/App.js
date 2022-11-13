@@ -306,6 +306,7 @@ class App extends Component {
                   siteCredentials={siteCredentials}
                   handleSession={this.handleSession} 
                   userWEBSession={this.state.userWEBSession}
+                  userInfo={this.state.userInfo}
                 />} 
               />
               <Route element={ <ProtectedRoutes userInfo={this.state.userInfo} /> }>

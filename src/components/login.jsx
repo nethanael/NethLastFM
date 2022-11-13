@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {useLocation, useParams} from 'react-router-dom';
 class Login extends Component {
 
     componentDidMount() {
@@ -25,6 +26,15 @@ class Login extends Component {
 
         }
     };  
+
+    componentDidUpdate = async () => {
+        console.log('Component Did Update!');
+        
+        setTimeout(() => {
+            console.log("Delayed for 3 seconds.");
+            //window.location = "/home"; 
+          }, "3000");
+    }
 
     render() { 
         const { userWEBSession: user } = this.props;
